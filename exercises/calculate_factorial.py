@@ -1,6 +1,6 @@
 # Implement factorial_recursive method
 def factorial_recursive(number):
-    if number == 0:
+    if number == 0 or number == 1:
         return 1
     else:
         return number * factorial_recursive(number - 1)
