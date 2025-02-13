@@ -1,3 +1,12 @@
+# Iterative factorial method
+def factorial_iterative(number):
+    result = 1
+
+    for i in range(1, number + 1):
+        result *= i
+
+    return result
+
 # Implement factorial_recursive method
 def factorial_recursive(number):
     if number == 0 or number == 1:
@@ -6,17 +15,16 @@ def factorial_recursive(number):
         return number * factorial_recursive(number - 1)
 
 
-# Helper method to get and validate a non-negative integer
-def get_non_negative_integer():
-    while True:
-        try:
-            num = int(input("Enter a non-negative integer: "))
-            if num >= 0:
-                return num
-            else:
-                print("Your number is out of the correct range. Please try again.")
-        except ValueError:
-            print("Invalid entry. Please try again.")
+# Helper method to validate a non-negative integer
+def process_input(user_input):
+    try:
+        num = int(user_input)
+        if num >= 0:
+            return num, False, None
+        else:
+            return None, True, "Your number is out of the correct range. Please try again."
+    except ValueError:
+        return None, True, "Invalid entry. Please try again."
 
 
 # Helper method to display the result of a factorial calculation
@@ -26,9 +34,18 @@ def display_factorial_results(number, result):
 
 def main():
     print("Factorial Computation Using Recursion")
+    number = 0
 
-    # Get value to calculate, handle negative input
-    number = get_non_negative_integer()
+    user_input = input("Enter a non-negative integer: ")
+
+    # Get value to calculate, print message if errors
+    repeat_loop = True
+    while repeat_loop:
+        number, repeat_loop, error_msg = process_input(user_input)
+
+        if error_msg is not None:
+            print(error_msg)
+            user_input = input("Enter a non-negative integer: ")
 
     # Call factorial_recursive method
     result = factorial_recursive(number)
