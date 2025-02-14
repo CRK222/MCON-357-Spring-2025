@@ -1,7 +1,9 @@
+import sys
 import unittest
-from unittest.result import failfast
+from math import factorial as math_factorial
 
-from exercises.calculate_factorial import factorial_recursive, process_input, factorial_iterative
+from exercises.calculate_factorial import factorial_recursive, process_input, factorial_iterative, \
+    factorial_iterative_recursive
 
 
 class TestFactorial(unittest.TestCase):
@@ -37,6 +39,20 @@ class TestFactorial(unittest.TestCase):
         self.assertEqual(factorial_iterative(14), 87178291200)
 
 
+    # Test factorial_iterative_recursive method
+    def test_factorialIterativeRecursiveBeforeRecursionLimit(self):
+        limit = sys.getrecursionlimit() - 1
+        result = factorial_iterative_recursive(limit)
+        expected = math_factorial(limit)
+        self.assertEqual(result, expected)
+
+    def test_factorialIterativeRecursiveAfterRecursionLimit(self):
+        limit = sys.getrecursionlimit() + 1
+        result = factorial_iterative_recursive(limit)
+        expected = math_factorial(limit)
+        self.assertEqual(result, expected)
+
+
     # Test process_input method
     def test_processInputOnValid(self):
         self.assertEqual(process_input("1"), (1, False, None))
@@ -48,7 +64,6 @@ class TestFactorial(unittest.TestCase):
     def test_processInputOnFraction(self):
         self.assertEqual(process_input("3/4"),
                          (None, True, "Invalid entry. Please try again."))
-
 
 
 if __name__ == '__main__':

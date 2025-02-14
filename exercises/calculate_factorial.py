@@ -7,12 +7,28 @@ def factorial_iterative(number):
 
     return result
 
+
 # Implement factorial_recursive method
 def factorial_recursive(number):
     if number == 0 or number == 1:
         return 1
     else:
         return number * factorial_recursive(number - 1)
+
+
+# Implement factorial_recursive, but solving the issue of recursion limit
+def factorial_iterative_recursive(number):
+    stack = []
+    result = 1
+
+    while number > 1:
+        stack.append(number)
+        number -= 1
+
+    while stack:
+        result *= stack.pop()
+
+    return result
 
 
 # Helper method to validate a non-negative integer
